@@ -1,3 +1,5 @@
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
+import { ENV } from "../lib/env.js";
 import { generateToken } from "../lib/utlis.js";
 import { loginShcmea, signupShcmea } from "../lib/validationSchema.js";
 import User from "../models/users.js";
@@ -25,16 +27,20 @@ export const signup = async (req, res) => {
     });
 
     if (user) {
-      generateToken(user._id, res);
-      await user.save();
+      const saveUser = await user.save();
+      generateToken(saveUser._id, res);
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       msg: "User created successfully",
       user: { ...user.toObject(), password: undefined },
     });
 
-    // Todo -- Send a welcome email to user 
+    try {
+      await sendWelcomeEmail(user.email, user.fullName, ENV.CLIENT_URL);
+    } catch (error) {
+      console.error("Failed to send welcome Email error", error);
+    }
   } catch (error) {
     return res
       .status(500)
