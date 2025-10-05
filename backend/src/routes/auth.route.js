@@ -1,17 +1,12 @@
 import express from "express";
+import { signup, login, logout } from "../controllers/auth.controller.js";
 const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send("Welcome to chatApp servers");
 });
-router.get("/signup", (req, res) => {
-  res.send("Signup endpoint");
-});
-router.get("/login", (req, res) => {
-  res.send("login endpoint");
-});
-router.get("/logout", (req, res) => {
-  res.send("logout endpoint");
-});
+router.post("/signup", signup);
+router.post("/login", login);
+router.get("/logout", logout);
 
 export default router;
