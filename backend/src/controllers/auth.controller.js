@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
       generateToken(saveUser._id, res);
     }
 
-    res.status(200).json({
+    res.status(201).json({
       msg: "User created successfully",
       user: { ...user.toObject(), password: undefined },
     });
@@ -65,9 +65,12 @@ export const login = async (req, res) => {
     if (!isValidPassword)
       return res.status(400).json({ msg: "Invalid Credentials" });
 
-    return res
-      .status(200)
-      .json({ msg: `welcome ${user.fullName} , you logged In` });
+    generateToken(user._id, res);
+
+    return res.status(200).json({
+      msg: `welcome ${user.fullName} , you logged In`,
+      user: { ...user.toObject(), password: undefined },
+    });
   } catch (error) {
     console.log("Error at login", error);
     return res
@@ -76,6 +79,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = (req, res) => {
-  res.send("logout endpoint");
+export const logout = (_, res) => {
+  res.cookie("jwt", "", { maxAge: 0 });
+  return res.status(200).json({ msg: "Logout Successfully" });
 };
