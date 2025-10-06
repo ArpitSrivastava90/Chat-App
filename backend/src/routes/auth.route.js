@@ -6,9 +6,11 @@ import {
   updateProfile,
 } from "../controllers/auth.controller.js";
 import { Middelware } from "../lib/utlis.js";
+import { arcjetProtection } from "../lib/arcjet.middleware.js";
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.use(arcjetProtection);
+router.get("/test", arcjetProtection, (req, res) => {
   res.send("Welcome to chatApp servers");
 });
 router.post("/signup", signup);
