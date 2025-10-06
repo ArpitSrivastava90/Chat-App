@@ -1,8 +1,9 @@
 import { sendWelcomeEmail } from "../emails/emailHandlers.js";
+import cloudinary from "../lib/cloudinary.js";
 import { ENV } from "../lib/env.js";
 import { generateToken } from "../lib/utlis.js";
 import { loginShcmea, signupShcmea } from "../lib/validationSchema.js";
-import User from "../models/users.js";
+import User from "../models/Users.js";
 import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
@@ -82,4 +83,36 @@ export const login = async (req, res) => {
 export const logout = (_, res) => {
   res.cookie("jwt", "", { maxAge: 0 });
   return res.status(200).json({ msg: "Logout Successfully" });
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { profilePic } = req.body;
+    console.log("profilePic", profilePic);
+
+    if (!profilePic) {
+      return res.status(400).json({ msg: "Profile pic is required" });
+    }
+
+    const userId = req.user._id;
+    console.log("userId", userId);
+
+    const uploadResponse = await cloudinary.uploader.upload(profilePic);
+    console.log("uploadResponse", uploadResponse);
+
+    const updatedProfile = await User.findByIdAndUpdate(
+      userId,
+      {
+        profilePic: uploadResponse.secure_url,
+      },
+      { new: true }
+    );
+
+    res.status(200).json(updatedProfile);
+  } catch (error) {
+    console.log("Error at update", error);
+    return res
+      .status(500)
+      .json({ msg: "Internal server error, try after sometime" });
+  }
 };
