@@ -9,6 +9,7 @@ import bcrypt from "bcryptjs";
 export const signup = async (req, res) => {
   try {
     const result = signupShcmea.safeParse(req.body);
+
     if (!result.success) {
       return res.status(400).json({ msg: "request body is not valid" });
     }

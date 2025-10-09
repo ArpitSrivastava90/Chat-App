@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useAuthStore } from "../../store/useAuthStore.js";
+import { Link, Navigate } from "react-router";
 
 function Signup() {
   const [formData, setformData] = useState({
@@ -7,15 +9,17 @@ function Signup() {
     password: "",
   });
 
+  const { signup, isLoggedIn, isSigningUp, authUser } = useAuthStore();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formdata", formData);
-    setformData({
-      fullName: "",
-      email: "",
-      password: "",
-    });
+    signup(formData);
   };
+
+  if (isLoggedIn) {
+    console.log("authUser", authUser);
+
+    <Navigate to={"/"} />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0f172a] text-white px-4">
@@ -69,18 +73,19 @@ function Signup() {
           {/* Signup Button */}
           <button
             type="submit"
+            disabled={isSigningUp}
             className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md font-semibold transition-colors"
           >
-            Sign Up
+            {isSigningUp ? "loading" : "signup"}
           </button>
         </form>
 
         {/* Login Link */}
         <p className="text-sm text-center text-gray-400 mt-6">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-400 hover:underline">
-            Login
-          </a>
+          <Link to={"/login"} className="text-blue-400 hover:underline">
+            Login{" "}
+          </Link>
         </p>
       </div>
     </div>

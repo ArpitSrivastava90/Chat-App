@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useAuthStore } from "../../store/useAuthStore";
+import { Link } from "react-router";
 
 const Login = () => {
   const [formData, setformData] = useState({
@@ -6,9 +8,11 @@ const Login = () => {
     password: "",
   });
 
+  const { login } = useAuthStore();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formData", formData);
+    login(formData);
   };
 
   return (
@@ -54,9 +58,9 @@ const Login = () => {
         {/* Signup Link */}
         <p className="text-sm text-center text-gray-400 mt-6">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-blue-400 hover:underline">
-            Sign up
-          </a>
+          <Link to={"/signup"} className="text-blue-400 hover:underline">
+            signup
+          </Link>
         </p>
       </div>
     </div>

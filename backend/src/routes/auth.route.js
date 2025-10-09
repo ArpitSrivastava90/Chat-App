@@ -17,5 +17,7 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
 router.put("/update-profile", Middelware, updateProfile);
-
+router.get("/check", Middelware, (req, res) => {
+  res.status(200).json(req.user);
+});
 export default router;
