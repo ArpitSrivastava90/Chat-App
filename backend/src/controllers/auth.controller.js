@@ -34,8 +34,8 @@ export const signup = async (req, res) => {
     }
 
     res.status(201).json({
-      msg: "User created successfully",
-      user: { ...user.toObject(), password: undefined },
+      ...user.toObject(),
+      password: undefined,
     });
 
     try {
