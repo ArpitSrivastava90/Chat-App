@@ -39,6 +39,7 @@ export const useAuthStore = create((set) => ({
 
   logout: async () => {
     set({ isLogingOut: true });
+    console.log("Sending URL", axiosIntsace.defaults.baseURL);
     try {
       await axiosIntsace.post("/auth/logout");
       set({ authUser: null });
