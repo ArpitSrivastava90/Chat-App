@@ -70,8 +70,8 @@ export const login = async (req, res) => {
     generateToken(user._id, res);
 
     return res.status(200).json({
-      msg: `welcome ${user.fullName} , you logged In`,
-      user: { ...user.toObject(), password: undefined },
+      ...user.toObject(),
+      password: undefined,
     });
   } catch (error) {
     console.log("Error at login", error);
