@@ -5,6 +5,7 @@ import User from "../models/Users.js";
 export const getAllContacts = async (req, res) => {
   try {
     const loginUserId = req.user._id;
+    console.log("loginUserId", loginUserId);
 
     const filteredUsers = await User.find({ _id: { $ne: loginUserId } }).select(
       "-password"
@@ -13,7 +14,7 @@ export const getAllContacts = async (req, res) => {
     if (filteredUsers.length === 0) {
       return res.status(200).json({ msg: "No contacts" });
     }
-    res.status(200).json(filteredUsers);
+    return res.status(200).json(filteredUsers);
   } catch (error) {
     console.log("Error in getAllContacts:", error);
     res.status(500).json({ message: "Server error" });
@@ -76,8 +77,6 @@ export const getChatPatners = async (req, res) => {
     const messages = await Message.find({
       $or: [{ senderId: loggedInuserid }, { receiverId: loggedInuserid }],
     });
-
-    // Collect all unique chat partner IDs
 
     const chatPartnerIds = [
       ...new Set(

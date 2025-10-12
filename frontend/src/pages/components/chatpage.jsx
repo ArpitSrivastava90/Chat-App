@@ -14,7 +14,7 @@ const ChatPage = () => {
       <div className="mainContainer w-[90vw] h-[700px] ">
         <div className="w-full h-full flex rounded-xl overflow-hidden shadow-lg">
           {/* Left Side */}
-          <div className="w-80 bg-slate-800/50 backdrop-blur-sm flex flex-col">
+          <div className="w-80 h-full bg-slate-800/50 backdrop-blur-sm flex flex-col relative p-3">
             <ProfileHeader />
             <ActiveTabSwitch />
             <div className="flex-1 overflow-y-auto p-4 space-y-2">

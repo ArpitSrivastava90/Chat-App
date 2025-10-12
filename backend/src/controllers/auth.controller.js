@@ -89,7 +89,6 @@ export const logout = (_, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body;
-    console.log("profilePic", profilePic);
 
     if (!profilePic) {
       return res.status(400).json({ msg: "Profile pic is required" });
@@ -109,7 +108,7 @@ export const updateProfile = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json(updatedProfile);
+    return res.status(200).json(updatedProfile);
   } catch (error) {
     console.log("Error at update", error);
     return res

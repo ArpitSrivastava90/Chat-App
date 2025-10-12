@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { axiosIntsace } from "../lib/axios";
-export const useChatStore = create(({ set, get }) => ({
+export const useChatStore = create((set, get) => ({
   allContacts: [],
   chats: [],
   messages: [],
@@ -8,11 +8,15 @@ export const useChatStore = create(({ set, get }) => ({
   selectedUser: null,
   isUsersLoading: false,
   isMessageLoading: false,
-  isSoundEnabled: localStorage.getItem("isSoundEnable") === true,
+  isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) ?? true,
 
   toggleSound: () => {
-    localStorage.setItem("isSoundEnable", !get().isSoundEnabled);
-    set({ isSoundEnabled: !get().isSoundEnabled });
+    const current = get().isSoundEnabled;
+    const next = !current;
+
+    localStorage.setItem("isSoundEnabled", JSON.stringify(next));
+
+    set({ isSoundEnabled: next });
   },
 
   setActiveTab: (tab) => set({ activeTab: tab }),
@@ -23,6 +27,7 @@ export const useChatStore = create(({ set, get }) => ({
     set({ isUsersLoading: true });
     try {
       const res = await axiosIntsace.get("/messages/contacts");
+
       set({ allContacts: res.data });
     } catch (error) {
       console.error(error);
@@ -34,9 +39,10 @@ export const useChatStore = create(({ set, get }) => ({
     set({ isUsersLoading: true });
     try {
       const res = await axiosIntsace.get("/messages/chats");
+      console.log("getMyChatPatners", res.data);
       set({ chats: res.data });
     } catch (error) {
-      console.error(error);
+      console.error("error in getting chat", error);
     } finally {
       set({ isUsersLoading: false });
     }
