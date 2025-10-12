@@ -17,12 +17,12 @@ const ContactList = () => {
   }
 
   return (
-    <div className="space-y-2 overflow-y-auto max-h-[80vh] pr-1 custom-scrollbar">
+    <div className="space-y-2 overflow-y-auto max-h-[80vh] pr-1 custom-scrollbar pb-1">
       {allContacts.map((contact) => (
         <div
           key={contact._id}
           onClick={() => setSelectedUser(contact)}
-          className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all 
+          className={`flex items-center gap-2 p-2 rounded-xl cursor-pointer transition-all mt-2 ml-1 mb-1 
             ${
               selectedUser?._id === contact._id
                 ? "bg-slate-600 ring-2 ring-blue-500"

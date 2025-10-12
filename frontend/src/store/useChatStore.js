@@ -47,4 +47,16 @@ export const useChatStore = create((set, get) => ({
       set({ isUsersLoading: false });
     }
   },
+
+  getMessageByUserId: async (userId) => {
+    set({ isMessageLoading: true });
+    try {
+      const res = await axiosIntsace.get(`/messages/${userId}`);
+      set({ messages: res.data.message });
+    } catch (error) {
+      console.error("Error at the getting Message");
+    } finally {
+      set({ isMessageLoading: false });
+    }
+  },
 }));

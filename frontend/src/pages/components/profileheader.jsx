@@ -29,7 +29,7 @@ const ProfileHeader = () => {
   };
 
   return (
-    <div className="w-full h-20 border-b-2 border-gray-600 pb-5 flex justify-between items-center">
+    <div className="w-full h-20pb-5 flex justify-between items-center">
       <div className="leftOne w-44 h-14 flex items-center gap-3">
         <div
           className="relative w-14 h-14 cursor-pointer group"
@@ -45,7 +45,7 @@ const ProfileHeader = () => {
             <span className="text-white text-xs">Change</span>
           </div>
 
-          <span className="absolute top-0 right-0 w-4 h-4 bg-green-500 border-2 border-black rounded-full"></span>
+          <span className="absolute top-1 right-0 w-3 h-3 bg-green-500 border-2 border-black rounded-full"></span>
 
           <input
             type="file"
