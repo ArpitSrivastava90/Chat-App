@@ -8,9 +8,9 @@ const ChatHeader = () => {
 
   return (
     <div className="h-16 flex justify-between items-center px-4 border-b border-slate-700 bg-slate-800/60 backdrop-blur-md">
-      {/* Left section: Avatar + Name + Online */}
+    
       <div className="flex items-center gap-3">
-        {/* Avatar with online dot */}
+    
         <div className="relative">
           <img
             src={selectedUser.profilePic}
