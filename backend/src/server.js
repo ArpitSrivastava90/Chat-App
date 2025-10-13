@@ -7,9 +7,11 @@ import messageRoutes from "./routes/message.route.js";
 import { connectDb } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import { ENV } from "./lib/env.js";
+import { app, server } from "./lib/socket.js";
 dotenv.config();
 
-const app = express();
+// const app = express(); deleted
+
 const __dirname = path.resolve(); // C:\Web development\Projects - 1\chatapp\backend
 
 const PORT = process.env.PORT || 5000;
@@ -31,7 +33,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connectDb().then(() => {
     console.log(`Your server is running on port ${PORT}`);
   });
